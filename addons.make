@@ -1,4 +1,3 @@
 ofxGui
 ofxKinect
 ofxXmlSettings
-ofxSocketIO

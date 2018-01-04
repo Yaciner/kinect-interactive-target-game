@@ -1,0 +1,24 @@
+{"collection": {
+    "matches": [
+      {"ingredient": "cookie.png", "recipe": "milk.png"},
+      {"ingredient": "slice.png", "recipe": "pizza.png"},
+      {"ingredient": "icecream.png", "recipe": "cone.png"}
+    ],
+    "allrecipes":
+      {
+        "recipe": "milk.png",
+        "recipe": "pizza.png",
+        "recipe": "cone.png",
+        "recipe": "brocollibowl.png",
+        "recipe": "eggssalad.png"
+      },
+      "allingredients":
+        {
+          "ingredient": "cookie.png",
+          "ingredient": "eggs.png",
+          "ingredient": "slice.png",
+          "ingredient": "brocolli.png",
+          "ingredient": "icecream.png"
+        }
+    }
+}

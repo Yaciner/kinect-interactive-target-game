@@ -55,7 +55,6 @@ class ofApp : public ofBaseApp{
         ofTexture texture;
         std::string status;
         ofVideoPlayer bg_anim;
-<<<<<<< HEAD
         ofVideoPlayer brocolli_anim, pizza_anim, burger_anim, ei_anim, fruitmand_anim, garnaal_anim, hotdog_anim, ijs_anim, kers_anim, kip_anim, koekjes_anim, popcorn_anim, snoep_anim, steak_anim, vis_anim;
         ofVideoPlayer start_anim;
         //ofxLabel scoreLabel;
@@ -63,12 +62,4 @@ class ofApp : public ofBaseApp{
         //ofRectangle timerRectangle;
         float startTime;
         bool timerEnd;
-=======
-        ofVideoPlayer pizza_anim;
-        //ofxLabel scoreLabel;
-        ofTrueTypeFont font;
-        //ofRectangle timerRectangle;
-    int timer;
-		
->>>>>>> e3c175ce61cea28b18055979024a7af0ddefaa62
 };

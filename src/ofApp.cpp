@@ -13,7 +13,6 @@ int currentLevel = 0;
 bool visible = false;
 int frames = 0;
 int animationfinished = true;
-<<<<<<< HEAD
 int tijd = 0;
 int level = 0.0;
 
@@ -24,18 +23,12 @@ int outerRight = 540;
 int outerBottom = 140;
 int centralTop = -90;
 int centralLeft = -260;
-=======
-
->>>>>>> e3c175ce61cea28b18055979024a7af0ddefaa62
 
 
 //--------------------------------------------------------------
 
 void ofApp::setup(){
-<<<<<<< HEAD
     
-=======
->>>>>>> e3c175ce61cea28b18055979024a7af0ddefaa62
     //ofToggleFullscreen();
     font.loadFont("happy.ttf", 30);
     kinect.init();
@@ -65,11 +58,7 @@ void ofApp::setup(){
     
     gui.add(kinectZSlider.setup("Kinect Scale Z", -0.15, -2, 2));
     
-<<<<<<< HEAD
     gui.add(kinectAngleSlider.setup("Kinect Angle", 1.75, -10, 10));
-=======
-    gui.add(kinectAngleSlider.setup("Kinect Angle", 0.40, -10, 10));
->>>>>>> e3c175ce61cea28b18055979024a7af0ddefaa62
     
     gui.add(statusLabel.setup("status", ofApp::status));
     
@@ -84,7 +73,6 @@ void ofApp::setup(){
     numPointsInRegion = 0;
     
     
-<<<<<<< HEAD
     targetSize =  230;
     if(debugMode == false) {
         bg_anim.load("bg_animatie.mp4");
@@ -106,13 +94,6 @@ void ofApp::setup(){
         vis_anim.load("scoreanimaties/vis.mp4");
         start_anim.load("start_scherm.mp4");
         start_anim.play();
-=======
-    targetSize =  260;
-    if(debugMode == false) {
-        bg_anim.load("bg_animatie.mp4");
-        bg_anim.play();
-        pizza_anim.load("pizza_anim.mp4");
->>>>>>> e3c175ce61cea28b18055979024a7af0ddefaa62
     }
 
 }
@@ -128,7 +109,6 @@ void ofApp::update(){
     
     bg_anim.update();
     pizza_anim.update();
-<<<<<<< HEAD
     brocolli_anim.update();
     burger_anim.update();
     ei_anim.update();
@@ -143,8 +123,6 @@ void ofApp::update(){
     snoep_anim.update();
     steak_anim.update();
     start_anim.update();
-=======
->>>>>>> e3c175ce61cea28b18055979024a7af0ddefaa62
     kinect.update();
     
     numPointsInRegion = 0;
@@ -171,25 +149,15 @@ void ofApp::update(){
                     //LINKS BOVEN
               int targetRegionleftTop = (targetSize)/2;
 
-<<<<<<< HEAD
                     if((pt.x > outerLeft - targetRegionleftTop && pt.x < outerLeft + targetRegionleftTop)
 
                        && (pt.y > outerTop - targetRegionleftTop && pt.y < outerTop + targetRegionleftTop)
-=======
-                    if((pt.x > -600-targetRegionleftTop && pt.x < -600 + targetRegionleftTop)
-
-                       && (pt.y > -600-targetRegionleftTop && pt.y < -600 + targetRegionleftTop)
->>>>>>> e3c175ce61cea28b18055979024a7af0ddefaa62
 
                        && (pt.z > kinectDistanceSlider-targetRegionleftTop && pt.z < kinectDistanceSlider + targetRegionleftTop)){
                         
                         if (correct == 0){
                             numPointsInRegion += 1;
-<<<<<<< HEAD
                            
-=======
-                            cout << leftTop;
->>>>>>> e3c175ce61cea28b18055979024a7af0ddefaa62
                         }
                     }
                     
@@ -200,11 +168,7 @@ void ofApp::update(){
 
                     int targetRegionmidTop = (targetSize) / 2;
 
-<<<<<<< HEAD
                     if((pt.x > centralTop - targetRegionmidTop && pt.x < centralTop + targetRegionmidTop)
-=======
-                    if((pt.x > -50 - targetRegionmidTop && pt.x < -50 + targetRegionmidTop)
->>>>>>> e3c175ce61cea28b18055979024a7af0ddefaa62
 
                        && (pt.y > centralLeft - targetRegionmidTop && pt.y < centralLeft + targetRegionmidTop)
 
@@ -212,11 +176,7 @@ void ofApp::update(){
                         
                         if (correct == 1){
                             numPointsInRegion += 1;
-<<<<<<< HEAD
                          
-=======
-                            cout << midTop;
->>>>>>> e3c175ce61cea28b18055979024a7af0ddefaa62
                         }
 
                     }
@@ -224,25 +184,15 @@ void ofApp::update(){
                     //RECHTS BOVEN
                     int targetRegionrightTop = (targetSize) / 2;
 
-<<<<<<< HEAD
                     if((pt.x > outerRight - targetRegionrightTop && pt.x < outerRight + targetRegionrightTop)
 
                        && (pt.y > outerTop - targetRegionrightTop && pt.y < outerTop + targetRegionrightTop)
-=======
-                    if((pt.x > 650 - targetRegionrightTop && pt.x < 650 + targetRegionrightTop)
-
-                       && (pt.y > -700-targetRegionrightTop && pt.y < -700 + targetRegionrightTop)
->>>>>>> e3c175ce61cea28b18055979024a7af0ddefaa62
 
                        && (pt.z > kinectDistanceSlider-targetRegionrightTop && pt.z < kinectDistanceSlider + targetRegionrightTop)){
                         
                         if (correct == 2){
                             numPointsInRegion += 1;
-<<<<<<< HEAD
                            
-=======
-                            cout << rightTop;
->>>>>>> e3c175ce61cea28b18055979024a7af0ddefaa62
                         }
 
                     }
@@ -251,24 +201,14 @@ void ofApp::update(){
                     //LINKS BENEDEN
                     int targetRegionleftBottom = (targetSize) / 2;
 
-<<<<<<< HEAD
                     if((pt.x > outerLeft - targetRegionleftBottom && pt.x < outerLeft + targetRegionleftBottom)
 
                        && (pt.y > outerBottom - targetRegionleftBottom && pt.y < outerBottom + targetRegionleftBottom)
-=======
-                    if((pt.x > -600 - targetRegionleftBottom && pt.x < -600 + targetRegionleftBottom)
-
-                       && (pt.y > 50-targetRegionleftBottom && pt.y < 50 + targetRegionleftBottom)
->>>>>>> e3c175ce61cea28b18055979024a7af0ddefaa62
 
                        && (pt.z > kinectDistanceSlider-targetRegionleftBottom && pt.z < kinectDistanceSlider + targetRegionleftBottom)){
                         
                         if (correct == 3){
                             numPointsInRegion += 1;
-<<<<<<< HEAD
-=======
-                            cout << leftBottom;
->>>>>>> e3c175ce61cea28b18055979024a7af0ddefaa62
                         }
 
                     }
@@ -276,24 +216,14 @@ void ofApp::update(){
                     //RECHTS BENEDEN
                     int targetRegionrightBottom = (targetSize) / 2;
                     
-<<<<<<< HEAD
                     if((pt.x > outerRight - 20 - targetRegionrightBottom && pt.x < outerRight - 20 + targetRegionrightBottom)
                        
                        && (pt.y > outerBottom -20 - targetRegionrightBottom && pt.y < outerBottom - 20 + targetRegionrightBottom)
-=======
-                    if((pt.x > 650 - targetRegionrightBottom && pt.x < 650 + targetRegionrightBottom)
-                       
-                       && (pt.y > 25 - targetRegionrightBottom && pt.y < 25 + targetRegionrightBottom)
->>>>>>> e3c175ce61cea28b18055979024a7af0ddefaa62
                        
                        && (pt.z > kinectDistanceSlider-targetRegionrightBottom && pt.z < kinectDistanceSlider + targetRegionrightBottom)){
                         
                         if (correct == 4){
                             numPointsInRegion += 1;
-<<<<<<< HEAD
-=======
-                            cout << rightBottom;
->>>>>>> e3c175ce61cea28b18055979024a7af0ddefaa62
                         }
                         
                     }
@@ -357,7 +287,6 @@ void ofApp::draw(){
 
     if(numPointsInRegion > 50) {
 
-<<<<<<< HEAD
             ofFill();
             score = score + 100;
             animationfinished = false;
@@ -428,24 +357,6 @@ void ofApp::draw(){
             showmsg = true;
             test = true;
             roundStarted = true;
-=======
-        ofNoFill();
-        score = score + 100;
-        ofLogNotice("Je hebt gescoord");
-//        std::string hoopHitEventName = "detectHit";
-//
-//        std::string param = "param";
-
-        //socketIO.emit(hoopHitEventName, param);
-        
-        //scoreSound.play();
-
-        //targetSize = 0;
-
-        showmsg = true;
-        test = true;
-        roundStarted = true;
->>>>>>> e3c175ce61cea28b18055979024a7af0ddefaa62
 
     } else {
 
@@ -456,7 +367,6 @@ void ofApp::draw(){
     
     if(debugMode) {
         //links boven
-<<<<<<< HEAD
         ofDrawBox(-670, -450, kinectDistanceSlider-220, targetSize, targetSize, 400);
         
         //middenboven
@@ -471,22 +381,6 @@ void ofApp::draw(){
         
         //rechtsbeneden
         ofDrawBox(520, 120, kinectDistanceSlider-220, targetSize, targetSize, 400);
-=======
-        ofDrawBox(-600, -600, kinectDistanceSlider-220, targetSize, targetSize, 400);
-        
-        //middenboven
-        ofDrawBox(-50, -200, kinectDistanceSlider-220, targetSize, targetSize, 400);
-        
-        //rechtsboven
-        ofDrawBox(650, -700, kinectDistanceSlider-220, targetSize, targetSize, 400);
-        
-        
-        //linksbeneden
-        ofDrawBox(-600, 50, kinectDistanceSlider-220, targetSize, targetSize, 400);
-        
-        //rechtsbeneden
-        ofDrawBox(700, 25, kinectDistanceSlider-220, targetSize, targetSize, 400);
->>>>>>> e3c175ce61cea28b18055979024a7af0ddefaa62
     }
     
     
@@ -517,7 +411,6 @@ void ofApp::draw(){
     ofPopMatrix();
     ofPopMatrix();
     easyCam.end();
-<<<<<<< HEAD
     
     bg_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
     start_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
@@ -641,26 +534,6 @@ void ofApp::draw(){
                 currentLevel = currentLevel + 1;
                 //startTimer(currentLevel);
                 
-=======
-    
-    bg_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
-    if(visible) {
-        pizza_anim.draw(ofGetWidth()/2-195, ofGetHeight()/2-300, 390, 500);
-        frames ++;
-    }
-    if (frames > 120){
-        visible = false;
-        frames = 0;
-        animationfinished = true;
-    }
-    
-    if (animationfinished){
-        if(roundStarted) {
-            if (test){
-                
-                currentLevel = currentLevel + 1;
-                //startTimer(currentLevel);
->>>>>>> e3c175ce61cea28b18055979024a7af0ddefaa62
                 correct = ofRandom(0, 5) - 1;
                 int index = 0;
                 while (index < 5)
@@ -681,26 +554,11 @@ void ofApp::draw(){
                         
                     }
                 }
-<<<<<<< HEAD
-=======
-                //            for(int i = 0; i < 5; i++){
-                //                std::cout << numbers[i] << std::endl;
-                //            }
-                
->>>>>>> e3c175ce61cea28b18055979024a7af0ddefaa62
             }
             
             ofSetColor(255);
             font.drawString(to_string(score), 20, 70);
             ofFill();
-<<<<<<< HEAD
-=======
-            ofSetColor(230, 230, 230);
-            ofDrawRectangle(ofGetWidth()/2 - 125 , 0, currentTimerSize, 50);
-            ofNoFill();
-            ofSetColor(255, 255);
-            
->>>>>>> e3c175ce61cea28b18055979024a7af0ddefaa62
             
             img.load("ingredients/" + food[numbers[correct]] + "_1.png");
             texture.allocate(240, 240, GL_RGB);
@@ -709,21 +567,13 @@ void ofApp::draw(){
             
             img.load("recipes/" + food[numbers[0]] + "_2.png");
             texture.allocate(240, 240, GL_RGB);
-<<<<<<< HEAD
             img.draw(150, 100);
-=======
-            img.draw(200, 100);
->>>>>>> e3c175ce61cea28b18055979024a7af0ddefaa62
             leftTop = food[numbers[0]];
             
             
             img.load("recipes/" + food[numbers[1]] + "_2.png");
             texture.allocate(200, 200, GL_RGB);
-<<<<<<< HEAD
             img.draw(ofGetWidth()/2-90, 250);
-=======
-            img.draw(600, 250);
->>>>>>> e3c175ce61cea28b18055979024a7af0ddefaa62
             midTop = food[numbers[1]];
             
             
@@ -731,31 +581,19 @@ void ofApp::draw(){
             imageWidth = img.getWidth();
             imageHeight = img.getHeight();
             texture.allocate(200, 200, GL_RGB);
-<<<<<<< HEAD
             img.draw(950, 100);
-=======
-            img.draw(1000, 100);
->>>>>>> e3c175ce61cea28b18055979024a7af0ddefaa62
             rightTop = food[numbers[2]];
             
             
             img.load("recipes/" + food[numbers[3]] + "_2.png");
             texture.allocate(200, 200, GL_RGB);
-<<<<<<< HEAD
             img.draw(150, 500);
-=======
-            img.draw(200, 500);
->>>>>>> e3c175ce61cea28b18055979024a7af0ddefaa62
             leftBottom = food[numbers[3]];
             
             
             img.load("recipes/" + food[numbers[4]] + "_2.png");
             texture.allocate(200, 200, GL_RGB);
-<<<<<<< HEAD
             img.draw(950, 500);
-=======
-            img.draw(1000, 500);
->>>>>>> e3c175ce61cea28b18055979024a7af0ddefaa62
             rightBottom = food[numbers[4]];
             
             test = false;
@@ -826,11 +664,8 @@ void ofApp::gotEvent(string& name) {
 
 void ofApp::keyPressed(int key){
     
-<<<<<<< HEAD
     
     start_anim.close();
-=======
->>>>>>> e3c175ce61cea28b18055979024a7af0ddefaa62
     if(key == 't') {
             ofFill();
             score = score + 100;
@@ -838,7 +673,6 @@ void ofApp::keyPressed(int key){
             ofLogNotice("Je hebt gescoord");
             
             std::string hoopHitEventName = "detectHit";
-<<<<<<< HEAD
             level = level + 1000.0;
             std::string param = "param";
             if(food[numbers[correct]] == "pizza") {
@@ -893,34 +727,17 @@ void ofApp::keyPressed(int key){
             if(food[numbers[correct]] == "vis") {
                 vis_anim.play();
             }
-=======
-            
-            std::string param = "param";
-            
-            //socketIO.emit(hoopHitEventName, param);
-        
-            //scoreSound.play();
-            pizza_anim.play();
->>>>>>> e3c175ce61cea28b18055979024a7af0ddefaa62
             visible = true;
             //targetSize = 0;
             numbers[5] = { };
             showmsg = true;
             test = true;
             roundStarted = true;
-<<<<<<< HEAD
     }
     
     
     test = true;
     roundStarted = true;
-=======
-        
-    }
-    
-    roundStarted = true;
-    test = true;
->>>>>>> e3c175ce61cea28b18055979024a7af0ddefaa62
     
     if (key == ' '){
         
@@ -941,19 +758,7 @@ void ofApp::keyPressed(int key){
 }
 
 void ofApp::startTimer(int currentLevel){
-<<<<<<< HEAD
 
-=======
-    currentTimerSize = 200 - currentLevel;
-    
-    for(int i = currentTimerSize; i > 0;i--) {
-        sleep(1);
-        currentTimerSize = currentTimerSize - 10;
-        cout << i;
-        continue;
-        
-    }
->>>>>>> e3c175ce61cea28b18055979024a7af0ddefaa62
 }
 
 

@@ -1,0 +1,7 @@
+<group>
+	<Kinect_distance>3030.08</Kinect_distance>
+	<Kinect_Scale_Z>-0.24</Kinect_Scale_Z>
+	<Kinect_Angle>0</Kinect_Angle>
+	<status>not connected</status>
+	<Connect_to>http://:3000</Connect_to>
+</group>
