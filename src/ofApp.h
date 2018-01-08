@@ -15,7 +15,8 @@ class ofApp : public ofBaseApp{
         void draw();
         void keyPressed(int key);
         void startTimer(int currentLevel);
-        
+        void doStuff();
+        void startVideo();
         /* - methods - */
         void drawPointCloud();
         void saveState();
@@ -24,12 +25,11 @@ class ofApp : public ofBaseApp{
         /* - global variables - */
         float targetSize, xPos, yPos;
         int numPointsInRegion, scaleFactorHoop;
-        //const char* debugMode = std::getenv("LUMIHOOPDEBUG");
         bool showmsg = false;
-        bool debugMode = false;
+        bool debugMode = true;
         bool roundStarted = false;
         void onConnection();
-        string food[15] = {"broccoli", "burger", "ei", "fruitmand", "garnaal", "hotdog", "ijs", "kers", "kip", "koekjes", "pizza", "popcorn", "snoep", "steak", "vis"};
+        string food[15] = {"brocolli", "burger", "ei", "fruitmand", "garnaal", "hotdog", "ijs", "kers", "kip", "koekjes", "pizza", "popcorn", "snoep", "steak", "zalm"};
         /* - instances - */
 //        ofxSocketIO socketIO;
         ofxKinect kinect;
@@ -37,6 +37,7 @@ class ofApp : public ofBaseApp{
         ofMesh pointCloud;
         //  ofSoundPlayer scoreSound;
         void bindEvents();
+        void resetScreen();
         void gotEvent(std::string& name);
         ofxPanel gui;
         ofxXmlSettings state;
@@ -54,9 +55,10 @@ class ofApp : public ofBaseApp{
         int imageHeight;
         ofTexture texture;
         std::string status;
+        ofSoundPlayer yay_sound, oh_sound, soundtrack_sound;
         ofVideoPlayer bg_anim;
-        ofVideoPlayer brocolli_anim, pizza_anim, burger_anim, ei_anim, fruitmand_anim, garnaal_anim, hotdog_anim, ijs_anim, kers_anim, kip_anim, koekjes_anim, popcorn_anim, snoep_anim, steak_anim, vis_anim;
-        ofVideoPlayer start_anim;
+        ofVideoPlayer brocolli_anim, pizza_anim, burger_anim, ei_anim, fruitmand_anim, garnaal_anim, hotdog_anim, ijs_anim, kers_anim, kip_anim, koekjes_anim, popcorn_anim, snoep_anim, steak_anim, zalm_anim;
+        ofVideoPlayer start_anim, end_anim;
         //ofxLabel scoreLabel;
         ofTrueTypeFont font;
         //ofRectangle timerRectangle;

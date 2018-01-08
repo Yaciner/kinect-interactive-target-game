@@ -13,23 +13,23 @@ int currentLevel = 0;
 bool visible = false;
 int frames = 0;
 int animationfinished = true;
-int tijd = 0;
-int level = 0.0;
 
 // SIZES //
-int outerLeft = -670;
-int outerTop = -450;
-int outerRight = 540;
+int outerLeft = -660;
+int outerTop = -480;
+int outerRight = 650;
 int outerBottom = 140;
-int centralTop = -90;
-int centralLeft = -260;
-
+int centralTop = -200;
+int centralLeft = 400;
+bool canScore = true;
+bool gameOver = false;
+bool playStart = true;
 
 //--------------------------------------------------------------
 
 void ofApp::setup(){
     
-    //ofToggleFullscreen();
+    ofToggleFullscreen();
     font.loadFont("happy.ttf", 30);
     kinect.init();
     timerEnd = false;
@@ -54,11 +54,11 @@ void ofApp::setup(){
     
     gui.setDefaultWidth(ofGetWidth()/2);
     
-    gui.add(kinectDistanceSlider.setup("Kinect distance", 3000, 80, 5000));
+    gui.add(kinectDistanceSlider.setup("Kinect distance", 3100, 80, 5000));
     
     gui.add(kinectZSlider.setup("Kinect Scale Z", -0.15, -2, 2));
     
-    gui.add(kinectAngleSlider.setup("Kinect Angle", 1.75, -10, 10));
+    gui.add(kinectAngleSlider.setup("Kinect Angle", 6.6, -10, 10));
     
     gui.add(statusLabel.setup("status", ofApp::status));
     
@@ -73,7 +73,7 @@ void ofApp::setup(){
     numPointsInRegion = 0;
     
     
-    targetSize =  230;
+    targetSize =  300;
     if(debugMode == false) {
         bg_anim.load("bg_animatie.mp4");
         bg_anim.play();
@@ -91,9 +91,13 @@ void ofApp::setup(){
         popcorn_anim.load("scoreanimaties/popcorn.mp4");
         snoep_anim.load("scoreanimaties/snoep.mp4");
         steak_anim.load("scoreanimaties/steak.mov");
-        vis_anim.load("scoreanimaties/vis.mp4");
+        zalm_anim.load("scoreanimaties/zalm.mp4");
         start_anim.load("start_scherm.mp4");
-        start_anim.play();
+        end_anim.load("eind_scherm.mp4");
+        yay_sound.load("sounds/win.mp3");
+        soundtrack_sound.load("sounds/soundtrack.mp3");
+        soundtrack_sound.play();
+        soundtrack_sound.setVolume(0.5f);
     }
 
 }
@@ -105,8 +109,6 @@ void ofApp::setup(){
 void ofApp::update(){
     
     kinect.setCameraTiltAngle(kinectAngleSlider);
-    
-    
     bg_anim.update();
     pizza_anim.update();
     brocolli_anim.update();
@@ -122,7 +124,9 @@ void ofApp::update(){
     popcorn_anim.update();
     snoep_anim.update();
     steak_anim.update();
+    zalm_anim.update();
     start_anim.update();
+    end_anim.update();
     kinect.update();
     
     numPointsInRegion = 0;
@@ -227,6 +231,21 @@ void ofApp::update(){
                         }
                         
                     }
+                     //ofDrawBox(0, -200, kinectDistanceSlider-220, 1700, 1000, 400);
+                    if(currentLevel == 0) {
+                        int startRegion = 1000;
+                        
+                        if((pt.x > -850 && pt.x < 850)
+                           
+                           && (pt.y > -700 && pt.y < 300)
+                           
+                           && (pt.z > kinectDistanceSlider - 200 && pt.z < kinectDistanceSlider -120)){
+                                numPointsInRegion += 1;
+//                                cout << "scoresssssss";
+                            }
+                    
+
+                    }
                     
                 }
                 
@@ -286,120 +305,36 @@ void ofApp::draw(){
     
 
     if(numPointsInRegion > 50) {
-
-            ofFill();
-            score = score + 100;
-            animationfinished = false;
-            ofLogNotice("Je hebt gescoord");
-            
-            std::string hoopHitEventName = "detectHit";
-            
-            std::string param = "param";
-            
-            //socketIO.emit(hoopHitEventName, param);
-
-            //scoreSound.play();
-            if(food[numbers[correct]] == "pizza") {
-                
-                pizza_anim.play();
-            }
-            if(food[numbers[correct]] == "brocolli") {
-                
-                brocolli_anim.play();
-            }
-            if(food[numbers[correct]] == "burger") {
-                
-                burger_anim.play();
-            }
-            if(food[numbers[correct]] == "ei") {
-                
-                ei_anim.play();
-            }
-            if(food[numbers[correct]] == "fruitmand") {
-                
-                fruitmand_anim.play();
-            }
-            if(food[numbers[correct]] == "garnaal") {
-                
-                garnaal_anim.play();
-            }
-            if(food[numbers[correct]] == "hotdog") {
-                
-                hotdog_anim.play();
-            }
-            if(food[numbers[correct]] == "ijs") {
-                ijs_anim.play();
-            }
-            if(food[numbers[correct]] == "kers") {
-                kers_anim.play();
-            }
-            if(food[numbers[correct]] == "kip") {
-                kip_anim.play();
-            }
-            if(food[numbers[correct]] == "koekjes") {
-                koekjes_anim.play();
-            }
-            if(food[numbers[correct]] == "popcorn") {
-                popcorn_anim.play();
-            }
-            if(food[numbers[correct]] == "snoep") {
-                snoep_anim.play();
-            }
-            if(food[numbers[correct]] == "steak") {
-                steak_anim.play();
-            }
-            if(food[numbers[correct]] == "vis") {
-                vis_anim.play();
-            }
-            visible = true;
-            //targetSize = 0;
-            numbers[5] = { };
-            showmsg = true;
-            test = true;
-            roundStarted = true;
-
+        playStart = false;
+        doStuff();
+        canScore = false;
     } else {
 
         ofNoFill();
 
     }
+    
+    
 //
     
     if(debugMode) {
         //links boven
-        ofDrawBox(-670, -450, kinectDistanceSlider-220, targetSize, targetSize, 400);
+        ofDrawBox(-660, -480, kinectDistanceSlider-220, targetSize, targetSize, 400);
         
         //middenboven
-        ofDrawBox(-90, -260, kinectDistanceSlider-220, targetSize, targetSize, 400);
+        ofDrawBox(0, -220, kinectDistanceSlider-220, targetSize, targetSize, 400);
         
         //rechtsboven
-        ofDrawBox(540, -450, kinectDistanceSlider-220, targetSize, targetSize, 400);
+        ofDrawBox(650, -480, kinectDistanceSlider-220, targetSize, targetSize, 400);
         
         
         //linksbeneden
-        ofDrawBox(-670, 140, kinectDistanceSlider-220, targetSize, targetSize, 400);
+        ofDrawBox(-660, 140, kinectDistanceSlider-220, targetSize, targetSize, 400);
         
         //rechtsbeneden
-        ofDrawBox(520, 120, kinectDistanceSlider-220, targetSize, targetSize, 400);
-    }
-    
-    
-    if(showmsg) {
+        ofDrawBox(650   , 120, kinectDistanceSlider-220, targetSize, targetSize, 400);
         
-        ofPushMatrix();
-        
-        ofScale(1, -1, 1);
-        
-        ofTranslate(0, 0, kinectDistanceSlider-220);
-        
-        //score_anim.draw(-320,-240, 640, 480);
-        
-        ofPopMatrix();
-        
-    } else {
-        
-        //score_anim.draw(-320,-240, 0, 0);
-        
+        ofDrawBox(0, -200, kinectDistanceSlider-450, 1700, 1000, 400);
     }
     
     
@@ -413,64 +348,73 @@ void ofApp::draw(){
     easyCam.end();
     
     bg_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
-    start_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
 
     if(visible) {
-        if(food[numbers[correct]] == "pizza") {
-            
-            pizza_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
+        if (gameOver == false){
+            if(food[numbers[correct]] == "pizza") {
+                
+                pizza_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
+            }
+            if(food[numbers[correct]] == "brocolli") {
+                
+                brocolli_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
+            }
+            if(food[numbers[correct]] == "burger") {
+                
+                burger_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
+            }
+            if(food[numbers[correct]] == "ei") {
+                
+                ei_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
+            }
+            if(food[numbers[correct]] == "fruitmand") {
+                
+                fruitmand_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
+            }
+            if(food[numbers[correct]] == "garnaal") {
+                
+                garnaal_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
+            }
+            if(food[numbers[correct]] == "hotdog") {
+                
+                hotdog_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
+            }
+            if(food[numbers[correct]] == "ijs") {
+                ijs_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
+            }
+            if(food[numbers[correct]] == "kers") {
+                kers_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
+            }
+            if(food[numbers[correct]] == "kip") {
+                kip_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
+            }
+            if(food[numbers[correct]] == "koekjes") {
+                koekjes_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
+            }
+            if(food[numbers[correct]] == "popcorn") {
+                popcorn_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
+            }
+            if(food[numbers[correct]] == "snoep") {
+                snoep_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
+            }
+            if(food[numbers[correct]] == "steak") {
+                steak_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
+            }
+            if(food[numbers[correct]] == "zalm") {
+                zalm_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
+            }
         }
-        if(food[numbers[correct]] == "brocolli") {
-            
-            brocolli_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
+
+        if(gameOver) {
+            cout << "supposed to draw end now";
+            end_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
+            roundStarted = false;
         }
-        if(food[numbers[correct]] == "burger") {
-       
-            burger_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
-        }
-        if(food[numbers[correct]] == "ei") {
-       
-            ei_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
-        }
-        if(food[numbers[correct]] == "fruitmand") {
-       
-            fruitmand_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
-        }
-        if(food[numbers[correct]] == "garnaal") {
-       
-            garnaal_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
-        }
-        if(food[numbers[correct]] == "hotdog") {
-       
-            hotdog_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
-        }
-        if(food[numbers[correct]] == "ijs") {
-            ijs_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
-        }
-        if(food[numbers[correct]] == "kers") {
-            kers_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
-        }
-        if(food[numbers[correct]] == "kip") {
-            kip_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
-        }
-        if(food[numbers[correct]] == "koekjes") {
-            koekjes_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
-        }
-        if(food[numbers[correct]] == "popcorn") {
-            popcorn_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
-        }
-        if(food[numbers[correct]] == "snoep") {
-            snoep_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
-        }
-        if(food[numbers[correct]] == "steak") {
-            steak_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
-        }
-        if(food[numbers[correct]] == "vis") {
-            vis_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
-        }
+        
         frames ++;
     }
-    if (frames >= 120){
+    
+    if (frames >= 50 && gameOver == false){
         visible = false;
         frames = 0;
         animationfinished = true;
@@ -488,17 +432,41 @@ void ofApp::draw(){
         popcorn_anim.stop();
         snoep_anim.stop();
         steak_anim.stop();
-        vis_anim.stop();
+        zalm_anim.stop();
         startTime = ofGetElapsedTimeMillis();
+        canScore = true;
     }
     
+    if (frames >= 120 && gameOver == true){
+        end_anim.stop();
+        numbers [5] = { };
+        test = false;
+        score = 0;
+        currentTimerSize = 0;
+        currentLevel = 0;
+        visible = false;
+        frames = 0;
+        animationfinished = true;
+        canScore = false;
+        roundStarted = false;
+        timerEnd = false;
+        playStart = true;
+        gameOver = false;
+    }
     
     
     if(timerEnd) {
         startTime = ofGetElapsedTimeMillis();
-        cout << "game over!";
-        timerEnd = false;
+        gameOver = true;
+        animationfinished = false;
+        visible = true;
+        end_anim.play();
+        ofSetColor(233, 33, 45);
+        font.drawString(to_string(score), 198, 195);
+        ofSetColor(255);
+        
     }
+    
     
     if (animationfinished){
         if(roundStarted) {
@@ -506,11 +474,11 @@ void ofApp::draw(){
             float barWidth = 300;
             float timer = ofGetElapsedTimeMillis() - startTime;
             
-            if(timer >= (20000.0)) {
+            if(timer >= (60000.0)) {
                 timerEnd = true;
             }
             
-            float timerBar = ofMap(timer, 0.0, 20000.0 , 1.0, 0.0, true);
+            float timerBar = ofMap(timer, 0.0, 60000.0 , 1.0, 0.0, true);
             if(timerBar >= 0.6){
                 ofSetColor(0,255,0);
                 
@@ -531,6 +499,7 @@ void ofApp::draw(){
             
             
             if (test){
+                canScore = true;
                 currentLevel = currentLevel + 1;
                 //startTimer(currentLevel);
                 
@@ -604,7 +573,10 @@ void ofApp::draw(){
     }
 
     
-   
+    if(playStart){
+        start_anim.draw(0, 0, ofGetWidth(), ofGetHeight());
+        startVideo();
+    }
     
     if(debugMode) {
         
@@ -640,8 +612,6 @@ void ofApp::bindEvents () {
     
 }
 
-
-
 void ofApp::gotEvent(string& name) {
     
     ofLogNotice("ofxSocketIO[gotEvent]", name);
@@ -651,32 +621,21 @@ void ofApp::gotEvent(string& name) {
 }
 
 
-
-//void ofApp::drawHoop () {
-
-//    showmsg = false;
-
-//}
-
-
-
 //--------------------------------------------------------------
 
-void ofApp::keyPressed(int key){
-    
-    
-    start_anim.close();
-    if(key == 't') {
+void ofApp::doStuff() {
+    if(currentLevel == 0) {
+        test = true;
+        roundStarted = true;
+        startTime = ofGetElapsedTimeMillis();
+    }
+    if(canScore){
+        if(currentLevel > 0){
             ofFill();
             score = score + 100;
             animationfinished = false;
             ofLogNotice("Je hebt gescoord");
-            
-            std::string hoopHitEventName = "detectHit";
-            level = level + 1000.0;
-            std::string param = "param";
             if(food[numbers[correct]] == "pizza") {
-                
                 pizza_anim.play();
             }
             if(food[numbers[correct]] == "brocolli") {
@@ -724,23 +683,23 @@ void ofApp::keyPressed(int key){
             if(food[numbers[correct]] == "steak") {
                 steak_anim.play();
             }
-            if(food[numbers[correct]] == "vis") {
-                vis_anim.play();
+            if(food[numbers[correct]] == "zalm") {
+                zalm_anim.play();
             }
+            yay_sound.play();
             visible = true;
-            //targetSize = 0;
             numbers[5] = { };
-            showmsg = true;
             test = true;
             roundStarted = true;
+        }
+        currentLevel ++;
     }
     
+}
+
+void ofApp::keyPressed(int key){
     
-    test = true;
-    roundStarted = true;
-    
-    if (key == ' '){
-        
+    if(key == 'd') {
         if(debugMode == true) {
             
             debugMode = false;
@@ -752,13 +711,30 @@ void ofApp::keyPressed(int key){
             debugMode = true;
             
         }
-        
     }
     
+    if(key == 's') {
+        playStart = false;
+        doStuff();
+        start_anim.stop();
+        test = true;
+        roundStarted = true;
+    }
+    
+    if(key == 't') {
+        playStart = false;
+        doStuff();
+        canScore = false;
+    }
 }
 
 void ofApp::startTimer(int currentLevel){
 
+}
+
+void ofApp::startVideo(){
+    start_anim.play();
+    cout << start_anim.isPlaying();
 }
 
 
